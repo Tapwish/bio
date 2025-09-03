@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My PC | Tapwish</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+            color: #f1f1f1;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            width: 100%;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6e44ff;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: #ff44ec;
+            transform: translateY(-50%) translateX(-5px);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 1rem 0;
+            background: linear-gradient(90deg, #5768e3, #3bade3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(86, 104, 227, 0.5);
+        }
+
+        .specs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .specs-category {
+            background: rgba(25, 25, 35, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(86, 104, 227, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .specs-category::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(86, 104, 227, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .specs-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(86, 104, 227, 0.4);
+        }
+
+        .specs-category:hover::before {
+            transform: rotate(45deg) translate(20%, 20%);
+        }
+
+        .specs-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .specs-header i {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+            color: #5768e3;
+            text-shadow: 0 0 15px rgba(86, 104, 227, 0.7);
+        }
+
+        .specs-header h2 {
+            font-size: 1.8rem;
+            color: #f1f1f1;
+        }
+
+        .specs-list {
+            list-style: none;
+        }
+
+        .specs-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .specs-list li:last-child {
+            border-bottom: none;
+        }
+
+        .spec-name {
+            color: #aaa;
+            font-weight: 500;
+        }
+
+        .spec-value {
+            color: #f1f1f1;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .pc-image {
+            width: 100%;
+            border-radius: 15px;
+            margin-top: 2rem;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid rgba(86, 104, 227, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .pc-image img {
+            width: 100%;
+            display: block;
+            transition: all 0.5s ease;
+        }
+
+        .pc-image:hover img {
+            transform: scale(1.03);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            color: #777;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(90deg, #5768e3, #3bade3);
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100vw) rotate(360deg);
+            }
+        }
+
+        @media (max-width: 900px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .specs-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-btn {
+                position: relative;
+                display: inline-block;
+                margin-bottom: 1rem;
+                left: auto;
+                top: auto;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1>Мой Компьютер</h1>
+            <p class="tagline">Характеристики и периферия</p>
+        </header>
+        
+        <div class="specs-container">
+            <div class="specs-category">
+                <div class="specs-header">
+                    <i class="fas fa-microchip"></i>
+                    <h2>Процессор</h2>
+                </div>
+                <ul class="specs-list">
+                    <li><span class="spec-name">Модель:</span> <span class="spec-value">Intel core i5-12400</span></li>
+                    <li><span class="spec-name">Тактовая частота:</span> <span class="spec-value">2.5 GHz (3.9 GHz Boost)</span></li>
+                    <li><span class="spec-name">Ядра/Потоки:</span> <span class="spec-value">6/12</span></li>
+                    <li><span class="spec-name">Техпроцесс:</span> <span class="spec-value">10 нм</span></li>
+                </ul>
+            </div>
+            
+            <div class="specs-category">
+                <div class="specs-header">
+                    <i class="fas fa-desktop"></i>
+                    <h2>Видеокарта</h2>
+                </div>
+                <ul class="specs-list">
+                    <li><span class="spec-name">Модель:</span> <span class="spec-value">NVIDIA GeForce RTX 4070s</span></li>
+                    <li><span class="spec-name">Память:</span> <span class="spec-value">12 GB GDDR6X</span></li>
+                    <li><span class="spec-name">Тактовая частота:</span> <span class="spec-value">2730 GHz</span></li>
+                    <li><span class="spec-name">Разъемы:</span> <span class="spec-value">HDMI, 3x DisplayPort</span></li>
+                </ul>
+            </div>
+            
+            <div class="specs-category">
+                <div class="specs-header">
+                    <i class="fas fa-memory"></i>
+                    <h2>Оперативная память</h2>
+                </div>
+                <ul class="specs-list">
+                    <li><span class="spec-name">Объем:</span> <span class="spec-value">32 GB</span></li>
+                    <li><span class="spec-name">Тип:</span> <span class="spec-value">DDR5</span></li>
+                    <li><span class="spec-name">Частота:</span> <span class="spec-value">4800 MHz</span></li>
+                </ul>
+            </div>
+            
+            <div class="specs-category">
+                <div class="specs-header">
+                    <i class="fas fa-hdd"></i>
+                    <h2>Накопители</h2>
+                </div>
+                <ul class="specs-list">
+                    <li><span class="spec-name">SSD (Система):</span> <span class="spec-value">Samsung 980 pro 1TB</span></li>
+                </ul>
+            </div>
+            
+            <div class="specs-category">
+                <div class="specs-header">
+                    <i class="fas fa-compact-disc"></i>
+                    <h2>Материнская плата</h2>
+                </div>
+                <ul class="specs-list">
+                    <li><span class="spec-name">Модель:</span> <span class="spec-value">ASUS ROG Strix B650-F Gaming</span></li>
+                </ul>
+            </div>
+            
+            <div class="specs-category">
+                <div class="specs-header">
+                    <i class="fas fa-fan"></i>
+                    <h2>Охлаждение</h2>
+                </div>
+                <ul class="specs-list">
+                    <li><span class="spec-name">Корпусные вентиляторы:</span> <span class="spec-value">2x Arctic P14 PWM</span></li>
+                    <li><span class="spec-name">Термопаста:</span> <span class="spec-value">Arctic MX-4</span></li>
+                </ul>
+            </div>
+            
+            <div class="specs-category">
+                <div class="specs-header">
+                    <i class="fas fa-box"></i>
+                    <h2>Корпус и БП</h2>
+                </div>
+                <ul class="specs-list">
+                    <li><span class="spec-name">Корпус:</span> <span class="spec-value">хз</span></li>
+                    <li><span class="spec-name">Блок питания:</span> <span class="spec-value">DEEPCOOL PF650</span></li>
+                    <li><span class="spec-name">Сертификация БП:</span> <span class="spec-value">80+ plus</span></li>
+                    <li><span class="spec-name">Цвет корпуса:</span> <span class="spec-value">Черно-серый</span></li>
+                </ul>
+            </div>
+            
+            <div class="specs-category">
+                <div class="specs-header">
+                    <i class="fas fa-keyboard"></i>
+                    <h2>Периферия</h2>
+                </div>
+                <ul class="specs-list">
+                    <li><span class="spec-name">Монитор:</span> <span class="spec-value">LG UltraGear 27 2560x1440 144hz"</span></li>
+                    <li><span class="spec-name">Клавиатура:</span> <span class="spec-value">Dark Project KD87A Gateron Teal Cap </span></li>
+                    <li><span class="spec-name">Мышь:</span> <span class="spec-value">Logitech G403 HERO </span></li>
+                    <li><span class="spec-name">Наушники:</span> <span class="spec-value">Ardor Gaming Edge</span></li>
+                    <li><span class="spec-name">Микрофон:</span> <span class="spec-value">HyperX cloud cast S</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="pc-image">
+            <img src="" alt="Мой компьютер">
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 Все права защищены | Создано с ❤️</p>
+    </footer>
+
+    <script>
+        // Создание частиц для фона
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 20 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                const animationDuration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Инициализация при загрузке страницы
+        window.addEventListener('load', function() {
+            createParticles();
+            
+            // Анимация появления элементов
+            const specs = document.querySelectorAll('.specs-category');
+            specs.forEach((spec, index) => {
+                spec.style.opacity = '0';
+                spec.style.transform = 'translateY(50px)';
+                
+                setTimeout(() => {
+                    spec.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    spec.style.opacity = '1';
+                    spec.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+            
+            // Анимация для изображения
+            const image = document.querySelector('.pc-image');
+            image.style.opacity = '0';
+            setTimeout(() => {
+                image.style.transition = 'opacity 1s ease';
+                image.style.opacity = '1';
+            }, 800);
+        });
+    </script>
+</body>
+</html>

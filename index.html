@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мое Пространство</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+            color: #f1f1f1;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            width: 100%;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #6e44ff;
+            box-shadow: 0 0 25px rgba(110, 68, 255, 0.5);
+            transition: all 0.5s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(110, 68, 255, 0.8);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 1rem 0;
+            background: linear-gradient(90deg, #6e44ff, #ff44ec);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(110, 68, 255, 0.5);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .top-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: rgba(25, 25, 35, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(110, 68, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(110, 68, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(110, 68, 255, 0.4);
+        }
+
+        .card:hover::before {
+            transform: rotate(45deg) translate(20%, 20%);
+        }
+
+        .card i {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #6e44ff;
+            text-shadow: 0 0 15px rgba(110, 68, 255, 0.7);
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #f1f1f1;
+        }
+
+        .card p {
+            color: #aaa;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(90deg, #6e44ff, #ff44ec);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .btn:hover::after {
+            transform: rotate(45deg) translate(20%, 20%);
+        }
+
+        .drain-btn {
+            background: linear-gradient(90deg, #ff44ec, #6e44ff);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bloom-btn {
+            background: linear-gradient(90deg, #6e44ff, #3bade3);
+            position: relative;
+        }
+
+        .work-btn {
+            background: linear-gradient(90deg, #3bade3, #6e44ff);
+            position: relative;
+        }
+
+        .pc-btn {
+            background: linear-gradient(90deg, #3bade3, #5768e3);
+            position: relative;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            color: #777;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(90deg, #6e44ff, #ff44ec);
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100vw) rotate(360deg);
+            }
+        }
+
+        .my-pc-card {
+            background: rgba(25, 25, 35, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(86, 104, 227, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), 0 0 25px rgba(86, 104, 227, 0.3);
+            width: 60%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .my-pc-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(86, 104, 227, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .my-pc-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(86, 104, 227, 0.4);
+        }
+
+        .my-pc-card:hover::before {
+            transform: rotate(45deg) translate(20%, 20%);
+        }
+
+        .my-pc-card i {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #5768e3;
+            text-shadow: 0 0 15px rgba(86, 104, 227, 0.7);
+        }
+
+        .my-pc-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #f1f1f1;
+        }
+
+        .my-pc-card p {
+            color: #aaa;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .top-cards {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                max-width: 400px;
+            }
+            
+            .my-pc-card {
+                width: 100%;
+                max-width: 400px;
+                padding: 1.5rem;
+            }
+            
+            .my-pc-card i {
+                font-size: 2.5rem;
+            }
+            
+            .my-pc-card h2 {
+                font-size: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <header>
+            <img src="https://avatars.mds.yandex.net/i?id=40ccf4b98af29e9565455130cd609812f67e981a-4117550-images-thumbs&n=13" alt="Profile" class="profile-img">
+            <h1>Tapwish</h1>
+            <p class="tagline">Самый дефолтный человек</p>
+        </header>
+        
+        <div class="cards-container">
+            <!-- Три верхние карточки -->
+            <div class="top-cards">
+                <div class="card">
+                    <i class="fas fa-user"></i>
+                    <h2>Биография</h2>
+                    <p>Ну типо я, да.</p>
+                    <a href="bio.html" class="btn">Исследовать</a>
+                </div>
+                
+                <div class="card">
+                    <i class="fas fa-share-alt"></i>
+                    <h2>Соцплатформы</h2>
+                    <p>Связь со мной через социалки. Активен в discord, tg (vk im not checking)</p>
+                    <a href="social.html" class="btn drain-btn">Перейти</a>
+                </div>
+                
+                <div class="card">
+                    <i class="fas fa-gamepad"></i>
+                    <h2>Портфолио</h2>
+                    <p>Игровые достижения, турниры</p>
+                    <a href="portfolio.html" class="btn bloom-btn">Исследовать</a>
+                </div>
+            </div>
+            
+            <!-- Карточка My PC по центру -->
+            <div class="my-pc-card">
+                <i class="fas fa-desktop"></i>
+                <h2>My PC</h2>
+                <p>Характеристики моего компьютера и периферии.</p>
+                <a href="my-pc.html" class="btn pc-btn">Исследовать</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 Все права защищены | Создано с ❤️</p>
+    </footer>
+
+    <script>
+        // Создание частиц для фона
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 20 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                const animationDuration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Инициализация при загрузке страницы
+        window.addEventListener('load', function() {
+            createParticles();
+            
+            // Анимация появления элементов
+            const cards = document.querySelectorAll('.card, .my-pc-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body>
+</html>
